@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<title>Docker</title>
+
+		<meta name="description" content="Vandebron">
+		<meta name="author" content="Rogier Dikkes">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+<div class="thelogo">
+  <div class="trick"></div>
+  <img src="images/vdb_emoji.png"/>
+</div>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section id="Intro">
+					<center><div style="padding: 97px; width:66px; background:url(images/dockerlogo.png)"></div></center>
+					<h2>Docker</h2>
+					<p>Vandebron</p>
+					<p>
+						<small>Giuseppe + Rogier</a></small>
+					</p>
+				</section>
+
+				<section>
+					<section id="Agenda">
+						<h2>Agenda</h2>
+						<p class="fragment">Docker Architecture</p>
+						<p class="fragment">Cgroup and namespaces</p>
+						<p class="fragment">Containers</p>
+						<p class="fragment">Images</p> 
+						<p class="fragment">Storage</p>
+						<p class="fragment">Network</p> 
+						<p class="fragment">Debugging</p>
+						<p class="fragment">Distributed</p>
+						<aside class="notes">
+xyz
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<section id="General">
+						<h2>Docker Architecture</h2>
+						<center><div class="resources">
+							<br clear="both">
+						  	<img src="images/docker_architecture.svg"/>
+						</div></br clear="both"></center>
+					</section>   
+
+					<section id="Client">
+						<h2>The Docker client</h2>
+						<p>User interface</p>
+					</section>    
+
+					<section id="Daemon">
+						<h2>Docker Daemon</h2>
+						<p>API</p>
+						<p>Responsible for:</p>
+						<p>Containers</p>
+						<p>Images</p>
+						<p>Networks</p>
+						<p>Storage (volumes)</p>
+					</section>
+
+					<section id="Registry">
+						<h2>Docker Registry</h2>
+						<p>Images</p>
+						<p>Public Registry</p>
+						<p>Private Registry</p>
+					</section>
+				</section>
+
+				<section>
+					<section id="CGroups">
+						<h2>CGROUPS + Namespaces</h2>
+						<table>
+							<thead>
+								<tr>
+									<th>cpu</th>
+									<th>cpuacct</th>
+									<th>cpuset</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>memory</td>
+									<td>devices</td>
+									<td>freezer</td>
+								</tr>
+								<tr>
+									<td>net_cls</td>
+									<td>blkio</td>
+									<td>perf_event</td>
+								</tr>
+								<tr>
+									<td>net_prio</td>
+									<td>hugetlb</td>
+									<td>pids</td>
+								</tr>
+								<tr>
+									<td>rmda</td>
+									<td>     </td>
+									<td>     </td>
+								</tr>
+							</tbody>
+						</table>
+						<p>More info: http://man7.org/linux/man-pages/man7/cgroups.7.html</p>
+					</section>
+					</section>
+
+					<section>
+					<section id="But" data-background-video="https://media.giphy.com/media/xDPSWfAmoSusM/giphy.mp4" data-background-color="#ffffff">
+					</section>
+
+					<section id="CGROUPS">
+						<h2>CGROUPS</h2>
+							<p>Resource isolation</p>
+							<p>What can i do?<p></p>
+					</section>
+
+					<section id="Namespaces">
+						<h2>Namespaces</h2>
+							<p>View isolation</p>
+							<p>What can i see?</p>
+					</section>
+
+					<section id="Result">
+						<h2>Result</h2>
+						<p>Isolation of applications in:</p>
+						<p>View (security)</p>
+						<p>Resources (OOM)</p>
+						<p>Some metrics</p>
+					</section>
+				</section>
+
+				<section>
+					<section id="Containers">
+						<h2>Lets run a container</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+						docker run hello-world
+						</code></pre>
+					</section>
+
+					<section id="Daemonize">
+						<h2>Daemonize! and name it</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+						docker run -d --name=sleepingbeauty anldisr/sleep
+					</code></pre>
+					</section>
+
+					<section id="PS">
+							<h2>Lets see</h2>
+							<p>Whats running NOW</p>
+							<pre><code class="hljs" data-trim contenteditable>
+							docker ps
+							</code></pre>
+							<p>What was running ONCE</p>
+							<pre><code class="hljs" data-trim contenteditable>
+							docker ps -a
+							</code></pre>
+					</section>
+
+					<section id="Inside">
+						<h2>Lets get inside</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+						docker exec -it sleepingbeauty /bin/sh
+						</code></pre>
+						<p>You can use docker attach...</p>
+						<p>but it attaches to the output of the entrypoint</p>
+						<p>... not always usefull</p>
+					</section>
+					<section>
+						<h2>Other tools</h2>
+						<p>NSENTER</p>
+					</section>
+
+					<section id="stop">
+						<h2>Lets stop stuff</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+							docker stop sleepingbeauty
+							</code></pre>
+						<h2>Lets delete stuff</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+							docker rm sleepingbeauty
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section id="Images">
+						<h2>Lets pull and Image</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+								docker pull debian:buster-slim
+						</code></pre>
+						<p>What did we just do?</p>
+					</section>
+
+					<section id="Tags">
+						<h2>TAGS</h2>
+						<p>Latest</p>
+						<p>Versioning</p>
+					</section>
+
+					<section id="Building">
+						<h2>Lets build an Image</h2>
+						<p>Create a directory called: sleep</p>
+						<p>Create file inside called Dockerfile</p>
+					<pre><code class="hljs" data-trim contenteditable>
+FROM debian:buster-slim
+
+LABEL maintainer "MyName"
+
+ENTRYPOINT ["echo"]
+
+CMD ["Hello World"]
+					</code></pre>
+					<p>Build and test it</p>
+					<pre><code class="hljs" data-trim contenteditable>
+					docker build -t hi ./
+					docker run --name=sup hi
+					docker rm sup
+					</code></pre>
+
+					</section>
+
+				<section id="login">
+					<h2>Lets login to the registry</h2>
+					<pre><code class="hljs" data-trim contenteditable>
+					docker login
+					</code></pre>
+					</section>
+
+				<section id="pushit">
+					<h2>Lets build and push it</h2>
+					<pre><code class="hljs" data-trim contenteditable>
+docker build -t myusername/hi
+docker push myusername/hi
+					</code></pre>
+
+
+				</section>
+			</section>
+			<section>
+			
+			<section id="images info">
+				<h2>View images</h2>
+				<pre><code class="hljs" data-trim contenteditable>
+						docker images
+				</code></pre>
+
+				<p>Lets delete an image</p>
+				<pre><code class="hljs" data-trim contenteditable>
+						docker rmi hi
+				</code></pre>				
+
+			</section>
+
+			<section id="pull images">
+				<h2>Lets get the image again</h2>
+				<pre><code class="hljs" data-trim contenteditable>
+docker pull username/hi
+docker run --name=sup hi
+docker rm sup
+				</code></pre>
+			</section>
+
+			<section id="Update Dockerfile">
+				<h2>Lets alter the Dockerfile</h2>
+				<pre><code class="hljs" data-trim contenteditable>
+FROM debian:buster-slim
+						
+LABEL maintainer "MyName"
+						
+ENTRYPOINT ["echo"]
+						
+CMD ["Hello Country"]
+											</code></pre>
+											<p>Lets build another tag:</p>
+											<pre><code class="hljs" data-trim contenteditable>
+docker build -t myusername/hi:0.0.2
+docker run --name=sup myusername/hi:0.0.2
+docker rm sup
+										</code></pre>
+			</section>
+		</section>
+
+		<section>
+			<section id="StorageTopic">
+			<h2>Docker Storage</h2>
+			<p>Docker uses Copy on Write</p>
+			<p>Most important thing to remember:</p>
+			<p>* Each action creates a layer</p>
+			<p>* Each action takes more storage</p>
+			<p>* More storage = Longer pull times</p>
+			</section>
+		</section>
+
+		<section>
+			<h2>What is copy-on-write?</h2>
+			<p>It's a mechanism allowing to share data.</p>
+			<p>The data appears to be a copy, but is only a link (or reference) to the original data.</p>
+			<p>The actual copy happens only when someone tries to change the shared data.</p>		
+			<p>Whoever changes the shared data ends up sharing their own copy instead.</p>		
+					
+		</section>
+
+				<section>
+					<section id="questions">
+						<h2>Questions?</h2>
+					</section>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: false }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
