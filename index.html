@@ -61,9 +61,7 @@
 						<p class="fragment">Containers</p>
 						<p class="fragment">Images</p> 
 						<p class="fragment">Storage</p>
-						<p class="fragment">Network</p> 
 						<p class="fragment">Debugging</p>
-						<p class="fragment">Distributed</p>
 						<aside class="notes">
 xyz
 						</aside>
@@ -327,13 +325,63 @@ docker rm sup
 			</section>
 		</section>
 
-		<section>
+		<section id="copyonwrite">
 			<h2>What is copy-on-write?</h2>
 			<p>It's a mechanism allowing to share data.</p>
 			<p>The data appears to be a copy, but is only a link (or reference) to the original data.</p>
 			<p>The actual copy happens only when someone tries to change the shared data.</p>		
-			<p>Whoever changes the shared data ends up sharing their own copy instead.</p>		
-					
+			<p>Whoever changes the shared data ends up sharing their own copy instead.</p>
+			<p>Source: https://vimeo.com/137716020</p>			
+		</section>
+
+		<section id="usedtobe">
+			<h2>Copy on write used to be:</h2>
+			<p>* slow</p>
+			<p>* consume alot of storage</p>
+			<p>* quickly become inconsistent on crashes</p>
+			</section>
+			<section id="now it is">
+			<h2>Percona and MySQL blogs now say</h2>
+			<p>Performance should not be a reason</p>
+			<p>https://mysqlserverteam.com/mysql-with-docker-performance-characteristics/</p>
+			<p>https://www.percona.com/blog/2016/11/16/is-docker-for-your-database/</p>
+		</section>
+
+		<section id="volumemount">
+			<h2>Lets mount a volume</h2>
+			<pre><code class="hljs" data-trim contenteditable>
+FROM debian:buster-slim
+											
+LABEL maintainer "MyName"
+											
+ENTRYPOINT ["/bin/sh"]
+</code></pre>
+
+<pre><code class="hljs" data-trim contenteditable>
+docker build -t runit ./
+</code></pre>
+			<p>Run interactive shell</p>
+<pre><code class="hljs" data-trim contenteditable>
+docker run -it runit
+</code></pre>
+
+<pre><code class="hljs" data-trim contenteditable>
+		docker run -it -v $PWD:/opt/somefile runit
+</code></pre>
+<p>What did we just do?</p>
+</section>
+
+		<section>
+			<section id="Debugging">
+				<h2>Lets debug</h2>
+				<p>Docker logs</p>
+				<p>Docker attach</p>
+				<p>Docker exec</p>
+				<p>Docker stats</p>
+			</section>
+		</section>
+
+
 		</section>
 
 				<section>
