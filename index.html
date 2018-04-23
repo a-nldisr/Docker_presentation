@@ -263,7 +263,7 @@ CMD ["Hello World"]
 				<section id="pushit">
 					<h2>Lets build and push it</h2>
 					<pre><code class="hljs" data-trim contenteditable>
-docker build -t myusername/hi
+docker build -t myusername/hi ./
 docker push myusername/hi
 					</code></pre>
 
@@ -307,7 +307,7 @@ CMD ["Hello Country"]
 											</code></pre>
 											<p>Lets build another tag:</p>
 											<pre><code class="hljs" data-trim contenteditable>
-docker build -t myusername/hi:0.0.2
+docker build -t myusername/hi:0.0.2 ./
 docker run --name=sup myusername/hi:0.0.2
 docker rm sup
 										</code></pre>
@@ -381,6 +381,11 @@ docker run -it runit
 			</section>
 		</section>
 
+
+		<section id="mentions">
+			<h2>Some people to check out</h2>
+			<p>Jerome Petazzoni</p>
+			<p>Jessie Frazelle</p>
 
 		</section>
 
